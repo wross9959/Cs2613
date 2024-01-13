@@ -2,6 +2,32 @@
 
 #   Author Will Ross (#3734692)
 #   Date: Jan 10th 2023   
+#Test Cases
+#   Test case 1:
+#       Input: This is a sentence.
+#       Expected: 
+#               Total number of alphabetic characters: 15
+#               Total number of words with repeated alphabetic characters: 1
+#               Total number of end-start letter matches: 0 
+#       Output: 
+#               Total number of alphabetic characters: 15
+#               Total number of words with repeated alphabetic characters: 1
+#               Total number of end-start letter matches: 0 
+#       Status
+#               PASS
+#
+#   Test case 2:
+#       Input: I order a Total of 21 Fiddleheads. :)) I thought they were exquisite.
+#       Expected: 
+#               Total number of alphabetic characters: 50
+#               Total number of words with repeated alphabetic characters: 6
+#               Total number of end-start letter matches: 2
+#       Output: 
+#               Total number of alphabetic characters: 50
+#               Total number of words with repeated alphabetic characters: 6
+#               Total number of end-start letter matches: 3
+#       Status
+#               Notice that i have 3 and the actual data is 2 i counted how many there is and there should 3 not 2
 
 #char count, repeated chars, number of end & starts with same char
 alpha_Char = 0
@@ -36,29 +62,20 @@ def clean_token(input, listIn, allowedChars):
 
 #How many words have repeated alphabetic characters?
 def repeat_letter(currWord):
-
-    met = False
-    for i in range(len(currWord)):
-        for j in range(1,len(currWord),1):
-            
+    for i in range(len(currWord) - 1):
+        for j in range(i+1,(len(currWord))):
             if(currWord[i] == currWord[j]):
-                met = True
-                #if match is found break
-                break
-
-            else:
-                #if no match on letter continue and skip the break
-                continue
-        break
-    return met
+                return True
+                
+    return False
 
 #How many times does a word end with the same letter of the alphabet that the next word begins with? Ignore case.
 def end_start_char(input1 , input2):
-    met = False
 
-    if(input1[len(input1)-1] == input2[0]):
-        met = True
-    return met
+    if(input1[-1].lower() == input2[0].lower()):
+        return True
+    
+    return False
 
 #function calls to prep the sentence to meet requirements
 sentList = clean_token(sentence, sentList, allowedChars)
@@ -74,14 +91,12 @@ for i in range(len(sentList)):
         repeated += 1
 
     #checks to make sure not out of index bound
-    if((i+1) < len(sentList)):
-        
+    if((i+1) < len(sentList) and (end_start_char(sentList[i], sentList[i + 1]))):
+        end_start += 1
         #checks if end and start are the same if true then adds one
-        if(end_start_char(sentList[i], sentList[i + 1])):
-            end_start += 1
         
-
-
+           
+        
 
 print("Total number of alphabetic characters: " +  str(alpha_Char))
 print("Total number of words with repeated alphabetic characters: " + str(repeated))
