@@ -1,0 +1,15 @@
+#lang racket
+(define (larger-rectangle l1 w1 l2 w2)
+  (let ((rec1 (recSum l1 w1)))
+    
+    (let((rec2(recSum l2 w2)))
+      
+         (cond [(< rec1 rec2)
+                1]
+               [(> rec1 rec2)
+                -1]
+               [(equal? rec1 rec2)
+                0]))))
+
+(define (recSum l w)
+  (* l w))
