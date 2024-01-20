@@ -44,7 +44,7 @@ def storeValues(file):
         if(stripped_line.isalpha()):
 
             operators.append(stripped_line)
-            if(i < 0):
+            if(num > 0):
                 numberOfValues.append(num)
             num = 0
 
@@ -75,7 +75,7 @@ def SUM(inputs):
     result = 0
 
     for i in inputs:
-        result += inputs[i]
+        result += i
 
     return result
 
@@ -90,8 +90,8 @@ def MAX(inputs):
     result = inputs[0]
 
     for i in inputs:
-        if(result < input[i]):
-            result = input[i]
+        if(result < i):
+            result = i
 
     return result
 
@@ -100,8 +100,8 @@ def MIN(inputs):
     result = inputs[0]
     
     for i in inputs:
-        if(result > input[i]):
-            result = input[i]
+        if(result > i):
+            result = i
 
     return result
 
@@ -149,7 +149,11 @@ def switch(command,inputs):
 
 def getCurrentOperation():
 
-    for i in operators:
-        start = numberOfValues[i]
-        end = numberOfValues[i + 1]    
-        switch(operators, (values))
+    for i in range (len(operators)):
+        start = (numberOfValues[i] * i)
+        end = (numberOfValues[i] * (i+1))
+
+        switch(operators[i], (values[start:end]))
+
+
+getCurrentOperation()
