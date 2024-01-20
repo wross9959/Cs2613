@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
-
+import math  
 
 def openFile():
     filePath = filedialog.askopenfilename(initialdir="C:\\Users\\willr\\Documents\\GitHub\\Cs2613\\Python\\ProgrammingQuestions\\PQ2",
@@ -35,25 +35,20 @@ def readFile(inputFile):
     input = open(inputFile, 'r')
     return input
 
-
 def storeValues(file):
-    num = 0
 
     for i in file:
         stripped_line = i.strip()
         if(stripped_line.isalpha()):
 
             operators.append(stripped_line)
-            if(num > 0):
-                numberOfValues.append(num)
-            num = 0
 
         elif(stripped_line.isdigit()):
-            values.append(int(stripped_line))
-            num += 1
+            numberOfValues.append(int(stripped_line))
+            
         elif(isfloat(stripped_line)):
             values.append(float(stripped_line))
-            num += 1
+            
 
     return operators, numberOfValues, values
 
@@ -63,11 +58,11 @@ operators, numberOfValues, values = storeValues(file)
 
 
 
-def testOutput():
+def testInput():
     print(operators)
     print(numberOfValues)
     print(values)
-testOutput()
+#testInput()
     
 
 
@@ -106,54 +101,99 @@ def MIN(inputs):
     return result
 
 def FXP(inputs):
-    result = 0
-
+    result = []
+    for z in inputs:
+        curr = []
+        for k in range(50):
+            curr.append((z**k) / math.factorial(k))
+        result.append(SUM(curr))
     return result
 
 def FPO(inputs):
-    result = 0
+    result = []
+    
+    for z in inputs:
+        curr = []
+        for k in range(50):
+            curr.append((k * ((z**k)/math.factorial(k))))
+        result.append(SUM(curr))
 
     return result
 
 def FSN(inputs):
-    result = 0
-
+    result = []
+    for z in inputs:
+        curr = []
+        for k in range(50):
+            curr.append((((-1)**k) * ((z)**((2*k) + 1)))/(math.factorial((2*k) + 1)))
+        result.append(SUM(curr))
     return result
 
 def FCS(inputs):
-    result = 0
-
+    result = []
+    for z in inputs:
+        curr = []
+        for k in range(50):
+            curr.append((((-1)**k) * ((z)**(2*k)))/(math.factorial(2*k)))
+        result.append(SUM(curr))
     return result
+
+
+
+def toString(input, command):
+    print(command + " Results:")
+
+    if(type(input) == list):
+        for i in range(len(input)):
+            print(str(i+1) + ":\t" + str(input[i]))
+    else:
+        print("#:\t" + str(input))
+
+
 
 def switch(command,inputs):
 
     if command == "SUM":
-        return SUM(inputs)
+        toString(SUM(inputs), command)
+        
     elif command == "AVG":
-        return AVG(inputs)
+        toString(AVG(inputs), command)
+
     elif command == "MAX":
-        return MAX(inputs)
+        toString(MAX(inputs), command)
+
     elif command == "MIN":
-        return MIN(inputs)
+        toString(MIN(inputs), command)
+
     elif command == "FXP":
-        return FXP(inputs)
+        toString(FXP(inputs), command)
+
     elif command == "FPO":
-        return FPO(inputs)
+        toString(FPO(inputs), command)
+
     elif command == "FSN":
-        return FSN(inputs)
+        toString(FSN(inputs), command)
+
     elif command == "FCS":
-        return FCS(inputs)
+        toString(FCS(inputs), command)
+
     else:
         print("No function found")
 
 
 def getCurrentOperation():
-
+    operators.pop()
+    start = 0
+    
     for i in range (len(operators)):
-        start = (numberOfValues[i] * i)
-        end = (numberOfValues[i] * (i+1))
+        end = start + numberOfValues[i]
 
-        switch(operators[i], (values[start:end]))
+        (switch(operators[i], (values[start:end])))
+
+        start = end
 
 
 getCurrentOperation()
+
+
+
