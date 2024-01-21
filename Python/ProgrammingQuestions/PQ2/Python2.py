@@ -2,20 +2,34 @@ from tkinter import *
 from tkinter import filedialog
 import math  
 
+def clearFile(pathToNewFile):
+    open(pathToNewFile, 'w').close()
+
 def openFile():
     filePath = filedialog.askopenfilename(initialdir="C:\\Users\\willr\\Documents\\GitHub\\Cs2613\\Python\\ProgrammingQuestions\\PQ2",
-                                          title="File?",
+                                          title="File to Read?",
                                           filetypes=(("text files","*.txt"),
                                                      ("all files", "*.*")))
-    file = open(filePath, 'r')
-    #print(file.read())
-    return file
+    #fileIn = open(filePath, 'r')
+    return filePath
+
+def openFileToWrite():
+    filePath2 = filedialog.askopenfilename(initialdir="C:\\Users\\willr\\Documents\\GitHub\\Cs2613\\Python\\ProgrammingQuestions\\PQ2",
+                                          title="File to write to?",
+                                          filetypes=(("text files","*.txt"),
+                                                     ("all files", "*.*")))
+    #fileOut = open(filePath, 'a')
+    return filePath2
+     
     #file.close
-#window = Tk()
-#button = Button(text="open",command=openFile)
-#button.pack()
-#window.mainloop()
-#file = openFile()
+
+def readFile(inputFile):
+    input = open(inputFile, 'r')
+    return input
+
+def writeFile(inputFile):
+    input = open(inputFile, 'a')
+    return input
 
 def isfloat(num):
     try:
@@ -24,9 +38,14 @@ def isfloat(num):
     except ValueError:
         return False
 
-def readFile(inputFile):
-    input = open(inputFile, 'r')
+#def readFile(filePath):
+    input = open(filePath, 'r')
     return input
+
+#def writeFile():
+    global pathToNewFile
+    f = open(pathToNewFile,"a")
+    return f
 
 def storeValues(file):
 
@@ -118,13 +137,17 @@ def FCS(inputs):
     return result
 
 def toString(input, command):
-    print(command + " Results:")
+    global fileToAppend
+    f = writeFile(fileToAppend)
+    f.write(command + " Results:\n")
 
     if(type(input) == list):
         for i in range(len(input)):
-            print(str(i+1) + ":\t" + str(input[i]))
+            f.write(str(i+1) + ":\t" + str(input[i]) + "\n")
     else:
-        print("#:\t" + str(input))
+        f.write("#:\t" + str(input) + "\n")
+
+    f.close()
 
 def switch(command,inputs):
 
@@ -166,18 +189,31 @@ def getCurrentOperation():
 
         start = end
 
+def main():
+    
+    global fileToAppend
+    global fileToRead
+    global operators
+    global values
+    global numberOfValues
 
-operators = []
-values = []
-numberOfValues = []
+    #fileToAppend = openFileToWrite()
+    fileToAppend = r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataOutput.txt'
+    clearFile(fileToAppend)
+    #fileToRead = openFile()
+    fileToRead = r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataInput.txt'
+    operators = []
+    values = []
+    numberOfValues = []
 
-inputFile = r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataInput.txt'
-outputFile =r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataOutput.txt'
+    
+    #window = Tk()
+    ##button = Button(text="open",command=openFile)
+    #button.pack()
+    #window.mainloop()
 
-file = readFile(inputFile).readlines()
-operators, numberOfValues, values = storeValues(file)
-
-getCurrentOperation()
-
-
-
+    file = readFile(fileToRead).readlines()
+    operators, numberOfValues, values = storeValues(file)
+    getCurrentOperation()
+    
+main()
