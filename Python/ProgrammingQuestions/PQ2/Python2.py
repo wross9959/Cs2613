@@ -11,19 +11,11 @@ def openFile():
     #print(file.read())
     return file
     #file.close
-
 #window = Tk()
 #button = Button(text="open",command=openFile)
 #button.pack()
 #window.mainloop()
 #file = openFile()
-operators = []
-values = []
-numberOfValues = []
-
-
-inputFile = r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataInput.txt'
-outputFile =r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataOutput.txt'
 
 def isfloat(num):
     try:
@@ -31,6 +23,7 @@ def isfloat(num):
         return True
     except ValueError:
         return False
+
 def readFile(inputFile):
     input = open(inputFile, 'r')
     return input
@@ -51,20 +44,6 @@ def storeValues(file):
             
 
     return operators, numberOfValues, values
-
- 
-file = readFile(inputFile).readlines()
-operators, numberOfValues, values = storeValues(file)
-
-
-
-def testInput():
-    print(operators)
-    print(numberOfValues)
-    print(values)
-#testInput()
-    
-
 
 def SUM(inputs):
     result = 0
@@ -138,8 +117,6 @@ def FCS(inputs):
         result.append(SUM(curr))
     return result
 
-
-
 def toString(input, command):
     print(command + " Results:")
 
@@ -148,8 +125,6 @@ def toString(input, command):
             print(str(i+1) + ":\t" + str(input[i]))
     else:
         print("#:\t" + str(input))
-
-
 
 def switch(command,inputs):
 
@@ -180,7 +155,6 @@ def switch(command,inputs):
     else:
         print("No function found")
 
-
 def getCurrentOperation():
     operators.pop()
     start = 0
@@ -192,6 +166,16 @@ def getCurrentOperation():
 
         start = end
 
+
+operators = []
+values = []
+numberOfValues = []
+
+inputFile = r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataInput.txt'
+outputFile =r'C:\Users\willr\Documents\GitHub\Cs2613\Python\ProgrammingQuestions\PQ2\DataOutput.txt'
+
+file = readFile(inputFile).readlines()
+operators, numberOfValues, values = storeValues(file)
 
 getCurrentOperation()
 
