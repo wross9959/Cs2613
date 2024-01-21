@@ -130,7 +130,7 @@ def FCS(inputs):
         result.append(SUM(curr))
     return result
 
-def toString(input, command):
+def toWrite(input, command):
     global fileToAppend
     f = File(fileToAppend, 'a')
 
@@ -149,28 +149,28 @@ def toString(input, command):
 def switch(command,inputs):
     #checks which operator 
     if command == "SUM":
-        toString(SUM(inputs), command)
+        toWrite(SUM(inputs), command)
         
     elif command == "AVG":
-        toString(AVG(inputs), command)
+        toWrite(AVG(inputs), command)
 
     elif command == "MAX":
-        toString(MAX(inputs), command)
+        toWrite(MAX(inputs), command)
 
     elif command == "MIN":
-        toString(MIN(inputs), command)
+        toWrite(MIN(inputs), command)
 
     elif command == "FXP":
-        toString(FXP(inputs), command)
+        toWrite(FXP(inputs), command)
 
     elif command == "FPO":
-        toString(FPO(inputs), command)
+        toWrite(FPO(inputs), command)
 
     elif command == "FSN":
-        toString(FSN(inputs), command)
+        toWrite(FSN(inputs), command)
 
     elif command == "FCS":
-        toString(FCS(inputs), command)
+        toWrite(FCS(inputs), command)
     #incase an error happens 
     else:
         print("No function found")
