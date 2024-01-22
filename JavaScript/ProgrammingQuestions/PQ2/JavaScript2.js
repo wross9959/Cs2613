@@ -32,7 +32,7 @@ function isfloat(num){
         float(num)
         return True
     }
-    except ValueError{
+    catch (error){
         return False
     }
 }
