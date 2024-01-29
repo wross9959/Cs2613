@@ -88,7 +88,9 @@ const file = fs.readFileSync(fileToRead, { encoding: 'utf8', flag: 'r' }).split(
 
 //three arrays filled with the data
 const {operators, numberOfValues, values} = storeValues(file)
-
+for(i in values){
+    console.log(values[i])
+}
 //clears any data on the output file
 clearFile()
 
@@ -125,13 +127,13 @@ function storeValues(file){
         let currOperator = (file[i])
         operators.push(currOperator.trim())
         //grab the amount of nums per operator
-        let num = parseInt(file[++i])
+        let num = parseInt((file[++i]).trim())
         numberOfValues.push(num)
         
-        for(let j = 0; j < num; j++){
+        for(let j = 1; j <= num; j++){
 
             //creating a curr varible cuase when trying to push on the same line it was causing the floats to become undefined
-            let curr = (parseFloat(file[j + 1 + i]))
+            let curr = (parseFloat((file[j + i]).trim()))
             values.push(curr)
         }
         i += num
@@ -142,14 +144,13 @@ function SUM(inputs){
     let result = 0
 
     for(i in inputs){
+        
         result += parseFloat(i)
     }
     return result
 }
 function AVG(inputs){
-    let result = 0
-
-    result = SUM(inputs) / inputs.length
+    let result = SUM(inputs) / (inputs.length -1)
     return result
 }
 function MAX(inputs){
@@ -164,22 +165,22 @@ function MAX(inputs){
     return result
 }
 function MIN(inputs){
-    let result = 0
-    result = inputs[0]
+    let result = inputs[0]
     
-    for(i in inputs){
-        if(result > i){
-            result = i
+    for(let i = 1; i < inputs.length; i++){
+        if(result > inputs[i]){
+            result = inputs[i]
         }
     }
     return result
 }
 function FXP(inputs){
     let result = []
-    for(z in inputs){
+    for(let z of inputs){
         let curr = []
-        for(let k = 0; k < 50; k++){
-            curr.push((z**k) /factorial(k))
+        z = parseFloat(z)
+        for(let k = 0; k <= 50; k++){
+            curr.push((z ** k) /(factorial(k)))
         }
         result.push(SUM(curr))
     }
@@ -190,8 +191,8 @@ function FPO(inputs){
     
     for(z in inputs){
         let curr = []
-        for(let k = 0; k < 50; k++){
-            curr.push((k * ((z**k)/factorial(k))))
+        for(let k = 0; k <= 50; k++){
+            curr.push((k * ((z**k)/(factorial(k)))))
         }
         result.push(SUM(curr))
     }
@@ -201,7 +202,7 @@ function FSN(inputs){
     let result = []
     for(z in inputs){
         let curr = []
-        for(let k = 0; k < 50; k++){
+        for(let k = 0; k <= 50; k++){
             curr.push((((-1)**k) * ((z)**((2*k) + 1)))/(factorial((2*k) + 1)))
         }
         result.push(SUM(curr))
@@ -212,7 +213,7 @@ function FCS(inputs){
     let result = []
     for(z in inputs){
         let curr = []
-        for(let k = 0; k < 50; k++){
+        for(let k = 0; k <= 50; k++){
             curr.push((((-1)**k) * ((z)**(2*k)))/(factorial(2*k)))
         }
         result.push(SUM(curr))
@@ -290,7 +291,7 @@ function getCurrentOperation(operators, numberOfValues, values){
         //used to get the elements needed in the values list
         end = start + numberOfValues[i]
         //switch to check the operator and what values are needed per operator
-        CommandSwitch(operators[i], (values.slice(start, end)))
+        CommandSwitch(operators[i], (values.slice((start), (end+1))))
 
         //sets the starting elemets to the end of the list value for the next operator
         start = end
