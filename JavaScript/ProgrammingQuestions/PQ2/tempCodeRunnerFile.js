@@ -1,40 +1,115 @@
- /*
-        @author:        Will Ross #3734691
-        Class:          Cs2613
-        Assesment:      JavaScript 2
-        Passed In as:   Programming Question 6
-        Date:           January 31st, 2024
-        Due:            February 13th, 2024  
-        
-        IN READ ME I HAVE MY TESTED OUTPUT AND IT MATCHED THE REQUIRED OUTPUT
+ 
+//All information below is from https://www.tutorialspoint.com/nodejs/nodejs_file_system.htm
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~
+MOVE TO READ ME when done
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        ***TESTS PASSED***
- */
+required for opening files
+var fs = require("fs");
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+getting info about file 
+fs.stat(path, callback)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+info
+
+path:
+This is the string having file name including path
+
+callback:
+This is the callback function which gets two arguments 
+(err, stats) where stats is an object of fs.Stats type which is 
+printed below in the example
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Methods we can use
+
+1
+stats.isFile()
+Returns true if file type of a simple file.
+
+2
+stats.isDirectory()
+Returns true if file type of a directory.
+
+3	
+stats.isBlockDevice()
+Returns true if file type of a block device.
+
+4	
+stats.isCharacterDevice()
+Returns true if file type of a character device.
+
+5	
+stats.isSymbolicLink()
+Returns true if file type of a symbolic link.
+
+6	
+stats.isFIFO()
+Returns true if file type of a FIFO.
+
+7	
+stats.isSocket()
+Returns true if file type of asocket.
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+For writing to a file
+
+fs.writeFile(filename, data[, options], callback)
+
+
+info 
+path:
+This is the string having the file name including path.
+
+data: 
+This is the String or Buffer to be written into the file.
+
+options:
+The third parameter is an object which will hold 
+{encoding, mode, flag}. By default. encoding is utf8, mode is 
+octal value 0666. and flag is 'w'
+
+callback:
+This is the callback function which gets a single 
+parameter err that returns an error in case of any writing error.
+
+
+*/
+
 
 //let varibles for the functions
 const fileToRead = 'C:\\Users\\willr\\Documents\\GitHub\\Cs2613\\JavaScript\\ProgrammingQuestions\\PQ2\\DataInput.txt'
 const fs = require('fs');
-//reads in the file with utf8
 const file = fs.readFileSync(fileToRead, { encoding: 'utf8', flag: 'r' }).split("\n");
 
-//clears any data on the output file
-clearFile()
 //three arrays filled with the data
 const {operators, numberOfValues, values} = storeValues(file)
-
-
+for(i in values){
+    console.log(values[i])
+}
+//clears any data on the output file
+clearFile()
 
 //gets the current operator
 getCurrentOperation(operators, numberOfValues, values)
 
+//prints finished message with filePath with results
+//print("Results were printed to \n\tfilePath: " + fileToAppend +"\n")
 
-//clears the outputfile so its not duplicated
+    
 function clearFile(){
     const fileToAppend = 'C:\\Users\\willr\\Documents\\GitHub\\Cs2613\\JavaScript\\ProgrammingQuestions\\PQ2\\DataOutput.txt'
     const fs = require('fs');
     fs.writeFileSync(fileToAppend, '');
 }
-//stores all the values on our three arrays
+
+
+
+
 function storeValues(file){
     //Operators in data
     let operators = []
@@ -68,21 +143,21 @@ function storeValues(file){
 function SUM(inputs){
     let result = 0
 
-    for(let i of inputs){
+    for(i in inputs){
         
-        result += i
+        result += parseFloat(i)
     }
     return result
 }
 function AVG(inputs){
-    let result = SUM(inputs) / (inputs.length)
+    let result = SUM(inputs) / (inputs.length -1)
     return result
 }
 function MAX(inputs){
     let result = 0
     result = inputs[0]
 
-    for(let i of inputs){
+    for(i in inputs){
         if(result < i){
             result = i
         }
@@ -114,7 +189,7 @@ function FXP(inputs){
 function FPO(inputs){
     let result = []
     
-    for(z of inputs){
+    for(z in inputs){
         let curr = []
         for(let k = 0; k <= 50; k++){
             curr.push((k * ((z**k)/(factorial(k)))))
@@ -125,7 +200,7 @@ function FPO(inputs){
 }
 function FSN(inputs){
     let result = []
-    for(z of inputs){
+    for(z in inputs){
         let curr = []
         for(let k = 0; k <= 50; k++){
             curr.push((((-1)**k) * ((z)**((2*k) + 1)))/(factorial((2*k) + 1)))
@@ -136,7 +211,7 @@ function FSN(inputs){
 }
 function FCS(inputs){
     let result = []
-    for(z of inputs){
+    for(z in inputs){
         let curr = []
         for(let k = 0; k <= 50; k++){
             curr.push((((-1)**k) * ((z)**(2*k)))/(factorial(2*k)))
@@ -153,12 +228,12 @@ function factorial(input){
         return input * factorial(input -1)
     }
 }
+
 function toWrite(input, command){
     const fileToAppend = 'C:\\Users\\willr\\Documents\\GitHub\\Cs2613\\JavaScript\\ProgrammingQuestions\\PQ2\\DataOutput.txt'
     const fs = require('fs')
     fs.appendFileSync(fileToAppend,(command + " Results:\n"))
 
-    //check if its an array
     if(Array.isArray(input)){
         for(let i = 0; i < input.length; i++){
             //writes the list values for our F functions
@@ -170,10 +245,17 @@ function toWrite(input, command){
         fs.appendFileSync(fileToAppend, ("#:\t" + (input) + "\n"))
     }
 }
+function formatOutput(operation, result) {
+    // `object` means array type
+    // `join` joins array instances with a specific syntax
+    if (typeof(result) === 'object') {
+        return `[${result.join(', ')}]`;
+    }
+    return `${operation}: ${result}`
+}
 function CommandSwitch(command,inputs){
     //checks which operator 
     command = command.trim()
-    
     switch(command){
         case "SUM":
             toWrite(SUM(inputs), command)
@@ -206,6 +288,7 @@ function CommandSwitch(command,inputs){
         
     }
 }  
+
 function getCurrentOperation(operators, numberOfValues, values){
     //start is equal to the first value in values
     let start = 0
@@ -214,7 +297,7 @@ function getCurrentOperation(operators, numberOfValues, values){
         //used to get the elements needed in the values list
         end = start + numberOfValues[i]
         //switch to check the operator and what values are needed per operator
-        CommandSwitch(operators[i], (values.slice((start), (end))))
+        CommandSwitch(operators[i], (values.slice((start), (end+1))))
 
         //sets the starting elemets to the end of the list value for the next operator
         start = end
