@@ -28,32 +28,61 @@ try{
 
 function calculate(file){
 
+    let currPersonMath = []
+    let currPpl = []
+
+    for(let a = 0; a <  file.length; a++){
+        currPersonMath[a] = parseFloat(file[a].calc)
+    }
+    for(let a = 1; a <  file.length; a++){
+        currPpl[a] = file[a].performer
+    }
+
     let closest = Infinity;
-    let trueValue = parseFloat(file[0].calc);
+    let trueValue = currPersonMath[0];
     let fileBestPerformer = "";
+    let currDiff = []
 
-    for(let i = 1; i < file.length; i++){
-        let current = parseFloat(file[i].calc);
-        let difference = Math.abs(trueValue - current);
-        pplCount[i] += (difference)
+    
+    
+    //Abby amounts
+    pplCount[0] = (currPersonMath[0] - trueValue) + pplCount[0]
+    currDiff[0] = (Math.abs(currPersonMath[0] - trueValue))
+    //tyson amounts
+    pplCount[1] = (currPersonMath[1]- trueValue) + pplCount[1]
+    currDiff[1] = (Math.abs(currPersonMath[1]- trueValue ))
+    //zack amounts
+    pplCount[2] += (currPersonMath[2] - trueValue) //+ pplCount[2]
+    currDiff[2] = (Math.abs(currPersonMath[2] - trueValue))
 
-        if(difference < closest){ 
-            fileBestPerformer = file[i].performer
-            closest = difference;
-            
+    /*
+    for(let i = 1; i < currPpl.length; i++){
+
+        if(currDiff[i] <= closest){ 
+            fileBestPerformer = currPpl[i]
+            closest = currDiff[i];
             pplCountIndex = i;
         }
     }
     bestPerformers.push(fileBestPerformer)
+    */
 }
 function toPrint(){
-    for(let i = 1; i < bestPerformers.length; i++){
-        console.log(`${i}. Name: ${bestPerformers[i]} \tValue: ${pplCount[pplCountIndex]}`)
+    // for(let i = 1; i < bestPerformers.length; i++){
+    //     console.log(`${i}. Name: ${bestPerformers[i]} \tValue: ${pplCount[pplCountIndex]}`)
 
+    // }
+    // console.log(`${1}. Name: ${bestPerformers[0]} \tValue: ${pplCount[pplCountIndex]}`)
+    // // console.log(bestPerformers[0])
+    // // console.log(pplCount[pplCountIndex])
+    for(i of pplCount){
+        console.log(i)
     }
-    console.log(`${1}. Name: ${bestPerformers[0]} \tValue: ${pplCount[pplCountIndex]}`)
-    // console.log(bestPerformers[0])
-    // console.log(pplCount[pplCountIndex])
+    for(i of currDiff){
+        console.log(i)
+    }
+    
+    
 
 }
 
