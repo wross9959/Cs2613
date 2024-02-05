@@ -28,7 +28,25 @@
 function file = readFile()
 
     file = textread('dataInput.txt','%s','Newline','')
-    
+    functionArray = [];
+    inputValues = [];
+    numberOfValues = [];
+    functionArrayIndex = 1;
+    %feed in the function operator
+    %feed in the number of values index + 1
+    %feed in the inputValues of i -> i + number of values
+    index = 1
+    while(index <= size(file))
+        functionArray[functionArrayIndex] = file[index];
+        numberOfValues[functionArrayIndex] = file[index + 1]
+        for(i = numberOfValues[functionArrayIndex])
+            inputValues = file[i + 2];
+        end for;
+        index = numberOfValues[functionArrayIndex];
+        functionArrayIndex = functionArrayIndex + 1;
+    end while;
+
+
 end function;
 
 
