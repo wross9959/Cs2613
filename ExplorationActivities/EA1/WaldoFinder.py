@@ -24,8 +24,8 @@ f2 = 0.7
 # f2 = 1.2
 
 # # test 3
-f1 = 0.5
-f2 = 1.2
+# f1 = 0.5
+# f2 = 1.2
 
 #read in photo to scan use 0 to make these grey scale due to the alogothim used in cv2
 img = cv2.resize(cv2.imread(waldoMap, 0), (0,0), fx =f1, fy = f1)
