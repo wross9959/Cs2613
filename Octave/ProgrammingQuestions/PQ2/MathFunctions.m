@@ -25,43 +25,46 @@
 
 
 
-function file = readFile()
-
-    file = textread('dataInput.txt','%s','Newline','')
-    functionArray = [];
-    inputValues = [];
-    numberOfValues = [];
-    functionArrayIndex = 1;
-    %feed in the function operator
-    %feed in the number of values index + 1
-    %feed in the inputValues of i -> i + number of values
-    index = 1
-    while(index <= size(file))
-        functionArray[functionArrayIndex] = file[index];
-        numberOfValues[functionArrayIndex] = file[index + 1]
-        for(i = numberOfValues[functionArrayIndex])
-            inputValues = file[i + 2];
-        end for;
-        index = numberOfValues[functionArrayIndex];
-        functionArrayIndex = functionArrayIndex + 1;
-    end while;
 
 
-end function;
+file = textread('dataInput.txt','%s','Newline','')
+functionArray = [];
+inputValues = [];
+numberOfValues = [];
+functionArrayIndex = 1;
+%feed in the function operator
+%feed in the number of values index + 1
+%feed in the inputValues of i -> i + number of values
+index = 1
+while(index <= size(file))
+    functionArray(functionArrayIndex) = file(index);
+    numberOfValues(functionArrayIndex) = str2num(file(index + 1));
+
+    for(i = numberOfValues(functionArrayIndex))
+        inputValues(i) = str2double(file(index + 2));
+    end;
+
+    index = numberOfValues(functionArrayIndex) + 2;
+    functionArrayIndex = functionArrayIndex + 1;
+
+end;
+
+
+
 
 
 function output  = SUM(values)
 
     for(i = values)
-        output +=  i;
-    endfor
+        output +=  values(i);
+    end;
 
-end function;
+end;
 
 function output  = AVG(values)
     sum_of_values = SUM(values);
     output = sum_of_values /  SIZE(values);
-end function;
+end;
 
 function output  = MAX(values)
 
@@ -70,9 +73,9 @@ function output  = MAX(values)
         if(max_value < values(i))
             max_value = values(i);
         end;
-    end for;
+    end;
     output = max_value;
-end function;
+end;
 
 function output  = MIN(values)
     min_value = values(1);
@@ -80,27 +83,27 @@ function output  = MIN(values)
         if(min_value > values(i))
             min_value = values(i);
         end;
-    end for;
+    end;
     output = min_value;
 
-end function;
+end;
 
 function output  = FXP(values)
 
 
-end function;
+end;
 
 function output  = FPO(values)
 
 
-end function;
+end;
 
 function output  = FSN(values)
 
 
-end function;
+end;
 
 function output  = FCS(values)
 
 
-end function;
+end;
