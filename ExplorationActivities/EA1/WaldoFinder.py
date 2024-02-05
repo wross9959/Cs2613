@@ -1,52 +1,6 @@
 import numpy as np
 from tkinter import filedialog
 import cv2
-import tkinter as tk
-from tkinter import Button, Label, Toplevel
-from PIL import Image, ImageTk
-# 
-# Make a GUI to select which photo you want to find waldo
-# use tinker or somethinf else
-# once selected we can use predeteremind values for the size index of the photos
-# then feed it all into the program
-# 
-# 
-# 
-# 
-# 
-
-
-# def show_selected_image(image_path):
-#     top = Toplevel()
-#     top.title('Selected Image')
-#     img = Image.open(image_path)
-#     img = ImageTk.PhotoImage(img)
-#     img_label = Label(top, image=img)
-#     img_label.image = img
-#     img_label.pack()
-
-# def create_image_button(window, image_path, position):
-#     img = Image.open(image_path)
-#     img.thumbnail((100, 100))  # Resizing the image to thumbnail size
-#     img = ImageTk.PhotoImage(img)
-#     btn = Button(window, image=img, command=lambda: show_selected_image(image_path))
-#     btn.image = img
-#     btn.grid(column=position, row=0, padx=10, pady=10)  # Added padding for visual separation
-    
-#     select_button = Button(window, text="Select", command=lambda: show_selected_image(image_path))
-#     select_button.grid(column=position, row=1, padx=10, pady=10)
-
-# root = tk.Tk()
-# root.title("Choose an Image")
-# root.geometry("800x600")  # Set the size of the window to 800x600 pixels
-
-
-# # Replace 'image1.jpg', 'image2.jpg', 'image3.jpg' with the paths to your images
-# create_image_button(root, 'C:\\Users\\willr\\Documents\\GitHub\\WaldoFinder\\Waldo1\\WaldoBeach.jpg', 0)
-# create_image_button(root, 'C:\\Users\\willr\\Documents\\GitHub\\WaldoFinder\\Waldo2\\map.jpg', 1)
-# create_image_button(root, 'C:\\Users\\willr\\Documents\\GitHub\\WaldoFinder\\Waldo3\\FindHard.jpg', 2)
-
-# root.mainloop()
 
 
 def openFile():
@@ -70,8 +24,8 @@ f2 = 0.7
 # f2 = 1.2
 
 # # test 3
-# f1 = 0.5
-# f2 = 1.2
+f1 = 0.5
+f2 = 1.2
 
 #read in photo to scan use 0 to make these grey scale due to the alogothim used in cv2
 img = cv2.resize(cv2.imread(waldoMap, 0), (0,0), fx =f1, fy = f1)
