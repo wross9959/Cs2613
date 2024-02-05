@@ -30,7 +30,7 @@ List any prerequisites for running your program, such as Python version, additio
 ### Installation
 #### OpenCv Python
 Must have openCV downloaded
-If not the command to run in your command promt is 'pip install opencv-python'
+If not the command to run in your command promt is `pip install opencv-python`
 ### Running the Program
 Explain how someone can run your program, including any command line arguments or input they need to provide.
 
