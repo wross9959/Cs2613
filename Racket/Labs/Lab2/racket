@@ -1,0 +1,21 @@
+#lang racket
+
+
+
+(define (isPalindrome input)
+  (let ([word (string-downcase input)])
+    (cond
+      [
+       (<= (string-length word) 1)
+       #t]
+      [
+       (not(equal? (string-ref word 0) (string-ref word (sub1 (string-length word)))))
+       #f]
+      [else
+       (isPalindrome substring (word (string-ref word 0) (string-ref word (sub1 (string-length word)))))])))
+       
+
+    
+(isPalindrome "o")
+(isPalindrome "1o")
+(isPalindrome "racecar")
