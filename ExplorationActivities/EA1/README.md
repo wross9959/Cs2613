@@ -55,12 +55,12 @@ The following program is size dependant. Meaning that depending on the waldo tes
     f2 = 0.7
 
 #### test 2 (If using a monitor or any computer with an aspect ratio of 21:9 for hard waldo test)
-    f1 = 0.3
-    f2 = 0.7
-
-#### test 3 (If using latop for hard waldo test)
     f1 = 0.5
     f2 = 1.2
+
+#### test 3 (If using latop for hard waldo test)
+    f1 = 0.3
+    f2 = 0.7
 
 ### History
 - **Creation Date**: January 28th, 2024
