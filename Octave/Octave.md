@@ -24,7 +24,7 @@ Octave is a high-level programming language primarily used for numerical computa
 
 ## Installation
 
-To use Octave, you can download and install it from the [official Octave website]([(https://docs.octave.org/latest/])). Alternatively, you can use package managers like `apt` on Linux or `brew` on macOS.
+To use Octave, you can download and install it from the [official Octave website](https://docs.octave.org/latest/). Alternatively, you can use package managers like `apt` on Linux or `brew` on macOS.
 
 ## Basic Operations
 
