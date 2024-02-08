@@ -1,0 +1,4 @@
+This is the Input.txt file.
+It contains a total of 4 lines of values for you to test.
+I recommend you TRY UPPERCASE and lower case letters.
+When finished, try different sentences in here too.
