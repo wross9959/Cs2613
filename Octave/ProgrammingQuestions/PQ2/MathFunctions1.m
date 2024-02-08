@@ -15,7 +15,21 @@
 % fwrite(fid,f);                      % write the new stuff over old file
 % fid=fclose(fid);                    % and cleanup after ourselves
 % clear fid f
+% this maps each element from cell array with
+%   % a double conversion and is stored back into matrix
+%   converted_numbers = cellfun(@str2double, array);
 
+%   % matrix of 5 zeroes
+%   retval = zeros (1, 5);
+
+%   for i = 1:5
+%       retval(i) = converted_numbers(i); % Use the converted numbers from cellfun
+%   end
+% end
+% reads in the contents as a character array
+% file read returns the data read as string & stores into cell array
+% data = fileread('DataInput.txt');
+% formatted_data = strsplit(data);
 % Value   Behavior
 % ' '	    Space
 % \b	    Backspace
