@@ -84,7 +84,7 @@ def imgPrepAndFind(waldoMap, waldoToFind, f1, f2):
         # if the image is 4x4 and the template is 2x2 this will get the avg 3x3 and that will slide in 3x3 to get max coverage on the img
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
         # prints all the possible locations
-        print(min_loc, max_loc)
+        #print(min_loc, max_loc)
         
         # using these methods cause they get the smallest size
         if(curr in [cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]):
