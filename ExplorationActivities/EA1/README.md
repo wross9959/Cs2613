@@ -1,14 +1,15 @@
 # WaldoFinder
 Using OpenCV to Find Waldo in Photos
 
+
 ## Author
 
-- *Name:* Will Ross
-- *Student #*: 3734692
-- *Course:* CS2613
-- *Assesment:* Exploration Activity 1
-- *Programming Lang:* Python
-- *Due Date:* February 13th, 2024
+- **Name:** Will Ross
+- **Student #**: 3734692
+- **Course:** CS2613
+- **Assesment:** Exploration Activity 1
+- **Programming Lang:** Python
+- **Due Date:** February 13th, 2024
 
 - [WaldoFinder](#waldofinder)
   - [Author](#author)
