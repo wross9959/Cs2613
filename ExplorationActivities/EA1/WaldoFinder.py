@@ -3,8 +3,8 @@
 import cv2
 
 # I can set it up this way but currently tkinter is having issues on macos
-#waldoMap = openFile()
-#waldoToFind = openFile()
+# waldoMap = openFile()
+# waldoToFind = openFile()
 # def openFile():
 #     filePath = filedialog.askopenfilename(initialdir="C:\\Users\\willr\\Documents\\GitHub\\WaldoFinder",
 #                                           title="File to Read?")
@@ -13,40 +13,58 @@ import cv2
 
 while(True):
     
+    #Users input
     type = input("Would you like to try the difficult waldo photo or the hard:\n\te: Easy\n\th: Hard\nInput: ")
     type.lower()
     
+    #easy input
     if(type == "e"):
-        
+        #gets the two photo directory
         waldoMap = r'C:\Users\willr\Documents\GitHub\Cs2613\ExplorationActivities\EA1\WaldoEasy\WaldoBeach.jpg'
         waldoToFind = r'C:\Users\willr\Documents\GitHub\Cs2613\ExplorationActivities\EA1\WaldoEasy\waldoForBeach.jpg'
         
+        #gets the size for the images
         f1 = 0.7
         f2 = 0.7
+        
         break
     
     elif(type == "h"):
+        
+        #gets the two photo directory
         waldoMap = r'C:\Users\willr\Documents\GitHub\Cs2613\ExplorationActivities\EA1\WaldoHard\FindHard.jpg'
         waldoToFind = r'C:\Users\willr\Documents\GitHub\Cs2613\ExplorationActivities\EA1\WaldoHard\waldo.png'
         
+        #asks if its a monitor or laptop
         size = input("Are you on a laptop:\n\ty: Yes\n\tn: No\nInput: ")
+        
+        #lowercase the input incase
         size.lower()
         
+        #gets size depending on laptop or monitor
         if(size == "y"):
             f1 = 0.3
             f2 = 0.7
         else:
             f1 = 0.5
             f2 = 1.2
+            
         break
+    
     else:
+        #if input is not valid it will promt again
         print("'" + type + "'" + " is not a valid input try again")
     
 
 def showUserPic(waldoMap, f1, f2):
     
-    if(f1 != ""): val = f1 
-    else: val = f2
+    #loads the photo the user selected
+    
+    if(f1 != ""): 
+        val = f1 
+    else: 
+        val = f2
+    
     
     userFindPhoto = cv2.resize(cv2.imread(waldoMap), (0,0), fx = val, fy = val)
     cv2.imshow("Try and find waldo", userFindPhoto)
