@@ -1,15 +1,15 @@
-import numpy as np
-from tkinter import filedialog
+#import numpy as np
+#from tkinter import filedialog
 import cv2
 
 # I can set it up this way but currently tkinter is having issues on macos
-    #waldoMap = openFile()
-    #waldoToFind = openFile()
-def openFile():
-    filePath = filedialog.askopenfilename(initialdir="C:\\Users\\willr\\Documents\\GitHub\\WaldoFinder",
-                                          title="File to Read?")
-    #gets the file needed for input with data
-    return filePath
+#waldoMap = openFile()
+#waldoToFind = openFile()
+# def openFile():
+#     filePath = filedialog.askopenfilename(initialdir="C:\\Users\\willr\\Documents\\GitHub\\WaldoFinder",
+#                                           title="File to Read?")
+#     #gets the file needed for input with data
+#     return filePath
 
 while(True):
     
