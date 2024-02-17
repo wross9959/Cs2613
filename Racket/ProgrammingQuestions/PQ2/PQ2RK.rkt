@@ -1,8 +1,10 @@
 #lang slideshow
 
 ;(read-lines-from-file "DataInput.txt")
+
 (define (read-lines-from-file file-path)
-  ;from example doc Racket 8.6 I/O
+  
+  ;from example doc Racket chapter 8.6 I/O
   (with-input-from-file file-path
      (lambda()
        (let appender ([input '()]
@@ -12,27 +14,34 @@
               [else (appender (append input (list (if (number? (string->number line)) (string->number line) line)))
                                   (read-line))])))))
 
+(define out (with-output-to-file file-path, toprint)
+  (write toprint out)
+  (close-output-port out))
 
 
-
-(define (switch valueList)
+(define (switch values)
   (cond
-    [(empty? valueList) '()]
-    [(string=? (first valueList) "END") '()]
+    ;check if values are empty
+    [(empty? values) '()]
+    ;checks if the command is end 
+    [(string=? (first values) "END") '()]
+    
     [else
-     (let* ([word (first valueList)])
-       (let* ([size (second valueList)])
+     ;
+     (let* ([operation (first values)])
+       (let* ([length (second values)])
          (cond
-           [(string=? word "SUM") (displayln (SUM (getValues (rest (rest valueList)))))]
-           [(string=? word "AVG") (displayln (AVG size (getValues (rest (rest valueList)))))]
-           [(string=? word "MAX") (displayln (MAX size (getValues (rest (rest valueList))) -inf.0))]
-           [(string=? word "MIN") (displayln (MIN size (getValues (rest (rest valueList))) +inf.0))]
-           [(string=? word "FXP") (displayln (FXP (getValues (rest (rest valueList)))))]
-           [(string=? word "FPO") (displayln (FPO (getValues (rest (rest valueList)))))]
-           [(string=? word "FSN") (displayln (FSN (getValues (rest (rest valueList)))))]
-           [(string=? word "FCS") (displayln (FCS (getValues (rest (rest valueList)))))]
+           [(string=? operation "SUM") (with-output-to-file "DataOuput.txt" (SUM (getValues (rest (rest values)))))]
+           [(string=? operation "AVG") (with-output-to-file "DataOuput.txt" (AVG length (getValues (rest (rest values)))))]
+           [(string=? operation "MAX") (with-output-to-file "DataOuput.txt"(MAX length (getValues (rest (rest values))) -inf.0))]
+           [(string=? operation "MIN") (with-output-to-file "DataOuput.txt" (MIN length (getValues (rest (rest values))) +inf.0))]
+           [(string=? operation "FXP") (with-output-to-file "DataOuput.txt" (FXP (getValues (rest (rest values)))))]
+           [(string=? operation "FPO") (with-output-to-file "DataOuput.txt" (FPO (getValues (rest (rest values)))))]
+           [(string=? operation "FSN") (with-output-to-file "DataOuput.txt" (FSN (getValues (rest (rest values)))))]
+           [(string=? operation "FCS") (with-output-to-file "DataOuput.txt" (FCS (getValues (rest (rest values)))))]
            [else '()])
          (switch (dropValues (rest valueList)))))]))
+
 
 (define (getValues n)
   (cond
@@ -91,6 +100,7 @@
           (loop (add1 k)
                 (cons (/ (expt z k) (fact k))
                       currValues)))))
+  
   (map fxpVal values))
 
 ;fpo calc
