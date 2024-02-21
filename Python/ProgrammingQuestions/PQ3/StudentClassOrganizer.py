@@ -20,8 +20,8 @@ def main():
     className = input("Enter class name and max number of students separated by the ENTER key")
     studentNum = input("")
     class_list = DoublyLinkedList()
-    promt = "Please make a selection for the course ${className}\n\t1: Add Student\n\t2: Remove Student\n\t3: Print Number of Students\n\t4: Class List in Ascending Order\n\t5: Class List in Descending Order\n\t0: Exit Program"
-    choice = int(input(promt))
+    out = "Please make a selection for the course ${className}\n\t1: Add Student\n\t2: Remove Student\n\t3: Print Number of Students\n\t4: Class List in Ascending Order\n\t5: Class List in Descending Order\n\t0: Exit Program"
+    choice = int(input(out))
 
 
     while(True):
@@ -44,7 +44,7 @@ def main():
             print_descend()
 
         else:
-            choice = int(input(promt))
+            choice = int(input(out))
 
 # returns the current number of students registered in the course.
 def num_students(self):
