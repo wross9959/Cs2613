@@ -1,1 +1,153 @@
-#lang slideshow
+#lang racket
+
+;(read-lines-from-file "DataInput.txt")
+
+(define (read-lines-from-file file-path)
+  ;from example doc Racket chapter 8.6 I/O
+  (with-input-from-file file-path
+     (lambda()
+       (let appender ([input '()]
+                      [line (read-line)])
+          (cond
+            [(string=? line "END") input]
+              [else (appender (append input (list (if (number? (string->number line)) (string->number line) line)))
+                                  (read-line))])))))
+
+
+(define (switch values file-path)
+  (with-output-to-file file-path #:exists 'append
+    (lambda ()
+      (cond
+        [(empty? values) '()]
+        [(string=? (first values) "END") '()]
+        [else
+         (cond
+           ;check if values are empty
+           [(empty? values) '()]
+           ;checks if the command is end 
+           [(string=? (first values) "END") '()]
+    
+           [else
+            (let* ([operation (first values)])
+              (let* ([length (second values)])
+                (cond
+                  [(string=? operation "SUM") (with-output-to-file "DataOuput.txt" (SUM (getValues (rest (rest values)))))]
+                  [(string=? operation "AVG") (with-output-to-file "DataOuput.txt" (AVG length (getValues (rest (rest values)))))]
+                  [(string=? operation "MAX") (with-output-to-file "DataOuput.txt"(MAX length (getValues (rest (rest values))) -inf.0))]
+                  [(string=? operation "MIN") (with-output-to-file "DataOuput.txt" (MIN length (getValues (rest (rest values))) +inf.0))]
+                  [(string=? operation "FXP") (with-output-to-file "DataOuput.txt" (FXP (getValues (rest (rest values)))))]
+                  [(string=? operation "FPO") (with-output-to-file "DataOuput.txt" (FPO (getValues (rest (rest values)))))]
+                  [(string=? operation "FSN") (with-output-to-file "DataOuput.txt" (FSN (getValues (rest (rest values)))))]
+                  [(string=? operation "FCS") (with-output-to-file "DataOuput.txt" (FCS (getValues (rest (rest values)))))]
+                  [else '()])
+                (switch (dropValues (rest values)) file-path)))])]))))
+
+(define (getValues n)
+  (cond
+    [(empty? n) '()]
+    [(string? (first n)) '()]
+    [else (cons (first n) (getValues (rest n)))]))
+
+(define (dropValues n)
+  (cond
+    [(empty? n) '()]
+    [(string? (first n)) n]
+    [else (dropValues (rest n))]))
+
+;sum calc
+(define (SUM values)
+  (cond
+    [(empty? values) 0]
+    [else(+ (first values) (SUM (rest values)))]))
+
+;avg calc
+(define (AVG size values)
+  (/ (SUM values) size))
+
+;max calc
+(define (MAX size values currMax)
+  (cond
+    [(empty? values) currMax]
+    [else
+     (cond
+       [(> (first values) currMax) (MAX size (rest values) (first values))]
+       [else (MAX size (rest values) currMax)])]))
+
+;min calc
+(define (MIN size values currMin)
+  (cond
+    [(empty? values) currMin]
+    [else
+     (cond
+       [(< (first values) currMin) (MIN size (rest values) (first values))]
+       [else (MIN size (rest values) currMin)])]))
+
+;factorial calc
+(define (fact n)
+  (cond
+    [(<= n 0) 1]
+    [else
+     (* n (fact (sub1 n)))]))
+
+;fxp calc
+(define (FXP values)
+  (define (fxpVal z)
+    (let loop ([k 0]
+               [currValues '()])
+      (if (= k 50)
+          (SUM currValues)
+          (loop (add1 k)
+                (cons (/ (expt z k) (fact k))
+                      currValues)))))
+  
+  (map fxpVal values))
+
+;fpo calc
+(define (FPO values)
+  (define (fpoVal z)
+    (let loop ([k 0]
+               [currValues '()])
+      (if (= k 50)
+          (SUM currValues)
+          (loop (add1 k)
+                (cons (* k (/ (expt z k) (fact k)))
+                      currValues)))))
+  (map fpoVal values))
+
+;fsn calc
+(define (FSN values)
+  (define (fsnVal z)
+    (let loop ([k 0]
+               [currValues '()])
+      (if (= k 50)
+          (SUM currValues)
+          (loop (add1 k)
+                (cons (/ (* (expt -1 k) (expt z (+ 1 (* 2 k)))) (fact (+ 1 (* 2 k))))
+                      currValues)))))
+  (map fsnVal values))
+  
+;fcs calc
+(define (FCS values)
+  (define (fcsVal z)
+    (let loop ([k 0]
+               [currValues '()])
+      (if (= k 50)
+          (SUM currValues)
+          (loop (add1 k)
+                (cons (/ (* (expt -1 k) (expt z (+ 1 (* 2 k)))) (fact (* 2 k)))
+                      currValues)))))
+  (map fcsVal values))
+(define (process-file file)
+  (switch(read-lines-from-file file) "DataOutput.txt"))
+(define input-file "DataInput.txt")
+
+(define results (process-file input-file))
+
+
+
+
+
+
+
+
+    
