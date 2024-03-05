@@ -22,17 +22,9 @@ function retval = createFrequencyTable(fileName)
 end;
 
 
-function retval = naiveBayes(dictionary, token)
-	tokenLength = length(dictionary.(token));
-	% checks if there is a row by the name of the token to check
-	if isfield(dictionary, token)
-	  retval += log((dictionary.(token) + 1) / (tokenLength) + length(fieldnames(dictionary)));
-	else
-	  retval += log(1 / (totalTokens + length(fieldnames(dictionary))));
-	end;
-end;
 
-function retval = determineOrigin(freqTable1, freqTable2, word)
+
+function determineOrigin(freqTable1, freqTable2, word)
 
 	tokens = strsplit(word);
 	
@@ -56,8 +48,23 @@ function retval = determineOrigin(freqTable1, freqTable2, word)
   	end;
 end;
 
-dictionary1 = createFrequencyTable("Beowulf.txt");
-dictionary2 = createFrequencyTable("Vindication.txt");
-% checkInput = input("What is the message you would like to check: ");
+function retval = naiveBayes(dictionary, token)
+	retval = 0;
+	% tokenLength = sum(length(dictionary.(token)));
+	tokenLength = sum(structfun(@(x) x, dictionary));
+	% checks if there is a row by the name of the token to check
+	if isfield(dictionary, token)
+	  retval += log((dictionary.(token) + 1) / (tokenLength + length(fieldnames(dictionary))));
+	else
+	  retval += log(1 / (tokenLength + length(fieldnames(dictionary))));
+	end;
+end;
 
-determineOrigin(dictionary1, dictionary2, "This is the message");
+
+dictionary1 = createFrequencyTable("Beowulf.txt");
+% disp(dictionary1);
+dictionary2 = createFrequencyTable("Vindication.txt");
+% disp(dictionary2);
+checkInput = input("What is the message you would like to check: ", "s");
+% disp(typeinfo(checkInput));
+determineOrigin(dictionary1, dictionary2, checkInput);
