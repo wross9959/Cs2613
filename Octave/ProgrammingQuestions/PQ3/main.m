@@ -18,6 +18,7 @@ function retval = createFrequencyTable(fileName)
 		%gets the amount of time each token is repeated and plugs into the freq table
 		curr = uniqueTokens{i};
 		retval.(curr) = sum(strcmp(tokens, curr));
+		
 	end;
 end;
 
@@ -27,44 +28,44 @@ end;
 function determineOrigin(freqTable1, freqTable2, word)
 
 	tokens = strsplit(word);
-	
-	for i = 1:length(tokens)
-		token = tokens{i};
-	end;
+
 	%gets the probability of eachs freq table
-	logProb1 = naiveBayes(freqTable1, token);
-	logProb2 = naiveBayes(freqTable2, token);
+	prob1 = naiveBayes(freqTable1, tokens);
+	prob2 = naiveBayes(freqTable2, tokens);
 
 	% If more word tokens in Beowulf which is freqTable1
-	if logProb1 > logProb2
+	if prob1 > prob2
 		disp('More likely written by the author of Beowulf');
 		
-	% If more word tokens in Wollstonecraft which is freqTable2
-  	elseif logProb2 > logProb1
-		disp('More likely written by Mary Wollstonecraft');
+	% If more word tokens in Vindication which is freqTable2
+  	elseif prob1 < prob2
+		disp('More likely written by the author of Vindication');
+		
 	% If there equal or both zero
   	else
 		disp('Could be from either author.');
   	end;
 end;
 
-function retval = naiveBayes(dictionary, token)
+function retval = naiveBayes(dictionary, tokens)
+
 	retval = 0;
-	% tokenLength = sum(length(dictionary.(token)));
-	tokenLength = sum(structfun(@(x) x, dictionary));
+	tokenLength = length(fieldnames(dictionary));
+	
 	% checks if there is a row by the name of the token to check
-	if isfield(dictionary, token)
-	  retval += log((dictionary.(token) + 1) / (tokenLength + length(fieldnames(dictionary))));
-	else
-	  retval += log(1 / (tokenLength + length(fieldnames(dictionary))));
+	for i = 1:length(tokens)
+
+		% gets the current word in the token struct
+		curr = tokens{i};
+
+		%checks if the word even exists in the dictionary
+		if isfield(dictionary, curr)
+		  retval += (dictionary.(curr)/ tokenLength);
+		end;
+		
 	end;
 end;
 
-
-dictionary1 = createFrequencyTable("Beowulf.txt");
-% disp(dictionary1);
-dictionary2 = createFrequencyTable("Vindication.txt");
-% disp(dictionary2);
 checkInput = input("What is the message you would like to check: ", "s");
-% disp(typeinfo(checkInput));
-determineOrigin(dictionary1, dictionary2, checkInput);
+
+determineOrigin(createFrequencyTable("Beowulf.txt"), createFrequencyTable("Vindication.txt"), checkInput);
