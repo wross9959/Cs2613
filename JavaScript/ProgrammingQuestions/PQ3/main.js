@@ -1,149 +1,104 @@
+//  @Author:        Will Ross
+//  Student ID:     3734692
+//  Class:          Cs2613
+//  Assesment:      JavaScript 3
+//  Handed in as:   Programming Question 10
+//  Completed:      March 2nd, 2024
+
+
+
+const readline = require("readline");
+const promt = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+//need to access all apis
 const axios = require('axios');
 
-const apiKey = "36c20b6862msh3a61c869af238b4p189226jsn846ba487663c";
+//Remove before submit
+//https://rapidapi.com/wirefreethought/api/geodb-cities get the api key here (Note im removing this now so we can push to github - Will)
+const key = "36c20b6862msh3a61c869af238b4p189226jsn846ba487663c";
 
-async function getCityInfo(city, regionCode){
+//asks the user for input and plugs into our cityInformation
+promt.question("City, Province/Territory: ", function(input) {
+    cityInformation(input);
+});
 
+async function cityInformation(input){
+    
+    //Split the two inputs for later use
+    inputList = (input.split(","));
+    let city = inputList[0].trim();
+    let province = inputList[1].trim();
+
+    const options = {
+      method: 'GET',
+      url: `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/CA/regions/${province}/cities`,
+      params: {
+        //input the city name as a required parameter
+        namePrefix: city
+      },
+      headers: {
+        'X-RapidAPI-Key': key,
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+      }
+    };
+    
     try {
-        const response = await axios({
-            method: 'GET',
-            url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
-            params: {namePrefix: city, countryIds: 'CA', regionCode: regionCode, limit: '1'},
-            headers: {
-                'X-RapidAPI-Key': apiKey,
-                'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
-            }
-        });
+        //wait on the api for data about the city
+        const response = await axios.request(options)
+        //access the data provided and save to a object varible 
+        let cityInfo = response.data.data[0]
 
-        if (response.data.data.length === 0) {
-            console.log("City not found.");
-            return;
+        //if the city has a population in the api database
+        if(cityInfo.population > 0){
+            console.log(`${city}, ${province} (${cityInfo.latitude}, ${cityInfo.longitude}) has a population of ${cityInfo.population}`)
         }
-
-        const cityInfo = response.data.data[0];
-        const outputMessage = cityInfo.population > 0 ?
-            `${cityInfo.name}, ${regionCode} (${cityInfo.latitude}, ${cityInfo.longitude}) has a population of ${cityInfo.population}` :
-            `${cityInfo.name}, ${regionCode} (${cityInfo.latitude}, ${cityInfo.longitude}) does not have population data.`;
+        else{
+            console.log(`${city}, ${province} (${cityInfo.atitude}, ${cityInfo.longitude}) does not have population data`)
+        }
         
-        console.log(outputMessage);
-        return cityInfo;
+        //asks the user for the range of near by cities for the next function
+        promt.question("Radius in kilometres: ", function(input) {
+            nearCities(input, cityInfo.id)
+        });
     } catch (error) {
-        console.error("An error occurred:", error.response.data.message);
-    }
+        console.error("City not avaiable. Make sure spelling is correct and you do the format(City, Province/Territory)")
+        process.exit(1)
+    }   
+
 }
 
-// async function getCitiesNearby(wikiDataId, radius) {
-//     try {
-//         const response = await axios({
-//             method: 'GET',
-//             url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/${wikiDataId}/nearbyCities`,
-//             params: {radius: radius, distanceUnit: 'KM', types: 'CITY', excludes: 'US', limit: '10'},
-//             headers: {
-//                 'X-RapidAPI-Key': apiKey,
-//                 'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
-//             }
-//         });
-
-//         const cities = response.data.data.map(city => city.name);
-//         console.log("Some cities close are:", cities.join("\n"));
-//     } catch (error) {
-//         console.error("An error occurred:", error.response.data.message);
-//     }
-// }
-
-// Example usage:
-// You'll replace this with user input handling
-const cityName = "Fredericton";
-const regionCode = "NB";
-const radius = 50; // Example radius
-getCityInfo(cityName, regionCode);
-// getCityInfo(cityName, regionCode).then(cityInfo => {
-//     if (cityInfo && cityInfo.wikiDataId) {
-//         getCitiesNearby(cityInfo.wikiDataId, radius);
-//     }
-// });
-
-
-/*
-Things needed
-1. The latitude and longitude of the city
-code{
-    const axios = require('axios');
-    const options = {
-    method: 'GET',
-    url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities/Q65/locatedIn',
-    headers: {
-        'X-RapidAPI-Key': '36c20b6862msh3a61c869af238b4p189226jsn846ba487663c',
-        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
-    }
-    };
-    try {
-        const response = await axios.request(options);
-        console.log(response.data);
-    } catch (error) {
-        console.error(error);
-    }
-}
-2. The population of the city
-code{
-    const axios = require('axios');
+async function nearCities(input, id){
 
     const options = {
-    method: 'GET',
-    url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities/Q60',
-    headers: {
-        'X-RapidAPI-Key': '36c20b6862msh3a61c869af238b4p189226jsn846ba487663c',
-        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
-    }
+        method: 'GET',
+        url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/${id}/nearbyCities`,
+        params: {
+            radius: input 
+        },
+        headers: {
+            'X-RapidAPI-Key': key,
+            'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+        }
     };
 
     try {
+        //wait on api
         const response = await axios.request(options);
-        console.log(response.data);
+        closeCities = response.data.data
+
+        console.log("Some cities close are:")
+        //print all the near by cities from api
+        //NOTE when testing i notice that you couldnt have a range more then 100 the api would throw and error also it wont ever provide more then 5 cities
+        for (let i = 0; i < closeCities.length; i++) {
+
+            console.log(`\t${i+1}. ${closeCities[i].city}`)
+        }
+        process.exit(1)
+
     } catch (error) {
-        console.error(error);
+        console.log("No nearby cities")
+        process.exit(1)
     }
 }
-
-3. The wikiDataId for the city Used to look up the city for the next step of the program
-
-
-COUNTRY REGION CITIES
-const axios = require('axios');
-
-const options = {
-  method: 'GET',
-  url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/countries/%7Bcountryid%7D/regions/%7Bregioncode%7D/cities',
-  headers: {
-    'X-RapidAPI-Key': '36c20b6862msh3a61c869af238b4p189226jsn846ba487663c',
-    'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
-  }
-};
-
-try {
-	const response = await axios.request(options);
-	console.log(response.data);
-} catch (error) {
-	console.error(error);
-}
-
-CITIES NEAR CITY
-const axios = require('axios');
-
-const options = {
-  method: 'GET',
-  url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities/%7Bcityid%7D/nearbyCities',
-  headers: {
-    'X-RapidAPI-Key': '36c20b6862msh3a61c869af238b4p189226jsn846ba487663c',
-    'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
-  }
-};
-
-try {
-	const response = await axios.request(options);
-	console.log(response.data);
-} catch (error) {
-	console.error(error);
-}
-
-*/
