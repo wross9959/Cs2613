@@ -1,9 +1,12 @@
+#Group members
+#1) Will Ross
+# that was it i showed up late so i didnt get in a group
+
+
 import abc
 from abc import ABC, abstractmethod
 
-
 class TradingCard(ABC):
-
     def __init__(self, ID, Rarity, YearRelease):
         self.ID = ID
         self.Rarity = Rarity
@@ -118,14 +121,19 @@ def driver():
 
 
     print("\nStart for loop of objects\n")
+    totalCost = 0
     for obj in objectList:
         print(obj.toString())
+        totalCost = totalCost + obj.cost()
+        
+    print("\nTotal Cost of Cards: $" + str(totalCost) +"\n")
       
 
 
 # driver()
 
 def highest():
+    
     cards = []
     card1 = HockeyCard(1001, 3, 2000, "Will", 3, 130)
     card2 = PlayingCard(1002, 6, 2005, True, "Mint")
@@ -144,35 +152,16 @@ def highest():
     cards.append(card6)
     cards.append(card7)
     cards.append(card8)
-
-    topCards = []
-
-    pos1 = 0
-    pos2 = 0
-    pos3 = 0
-
-    for card in cards:
-        
-        if(card.cost() > pos1):
-
-            if(card.cost() > pos2):
-
-                if(card.cost() > pos3):
-                    pos1 = pos2
-                    pos2 = pos3
-                    pos3 = card.getId()
-
-            pos1 = pos2
-            pos2 = card.getID()
-
-        pos1 = card.getID()
-
-    for obj in objectList:
-        print(obj.toString())
+    
+    #found this function here https://runestone.academy/ns/books/published/fopp/Classes/sorting_instances.html 
+    #basically sorted(the list input, key = lamdba card "for each loop", the object attriubute to sort on, if you want it in reverse or not)
+    topCards = sorted(cards, key=lambda card: card.cost(), reverse=True)
+    
+    for i in range(0, 3):
+        print(str(i+1) + ") " + topCards[i].toString())
     
 
-
-        print(obj.toString())
+driver()
 highest()
     
 
