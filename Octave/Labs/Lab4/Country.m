@@ -1,19 +1,19 @@
 
-classdef Country
+classdef Country 
 	properties
 		countryName = '';
 		countryPopulation = 0;
-		cities;
+		cities = City.empty;
 		cityCount = 0;
 
 	end;
 
 	methods
 		% Constructor
-		function obj = Country(countryName)
+		function obj = Country(countryName, name, population)
+			obj = obj@City(name, population);
             obj.countryName = countryName;
             obj.countryPopulation = 0;
-            
         end;
 
 
