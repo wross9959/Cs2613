@@ -1,0 +1,33 @@
+#lang racket
+(require racket/class)
+
+
+
+(define BST%
+  (class object%
+    (super-new)
+    (define/public (insert-LetterNode) #f)
+    (define/public (insert-help LetterNode1 LetterNode2) #f)
+    (define/public (get-head) #f)
+    (define/public (print-tree)
+      ((null? LetterNode)
+       (print-tree this.left
+       
+      
+      )
+    (init-field LetterNode))
+)
+
+(define LetterNode%
+  (class object%
+    (super-new)
+    (define/public (increment-frequency) (add1 freq))
+    (define/public (print)
+      fprintf("~a/n" letter)
+      )
+    
+    
+    (init-field [LetterNode1p #f] [LetterNode2 #f] [letter ""] [freq 1])))
+
+
+  
