@@ -44,6 +44,9 @@ If you don't have Mongodb for NodeJS downloaded you must:
 4. Press connect (this will create a local server on your computer)
 5. Then once complete go to terminal and run this command for Node Js `npm init -y` and `npm install mongodb`
 
+Also to note it is currently set up to work on a personal local host not on the cloud.
+
+
 ### Creating a Algorithm
 
 ```txt
