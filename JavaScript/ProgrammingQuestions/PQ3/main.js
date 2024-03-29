@@ -55,7 +55,8 @@ async function cityInformation(input){
             console.log(`${city}, ${province} (${cityInfo.latitude}, ${cityInfo.longitude}) has a population of ${cityInfo.population}`)
         }
         else{
-            console.log(`${city}, ${province} (${cityInfo.atitude}, ${cityInfo.longitude}) does not have population data`)
+            //Fixed my spelling mistake on lat 2024-03-29
+            console.log(`${city}, ${province} (${cityInfo.latitude}, ${cityInfo.longitude}) does not have population data`)
         }
         
         //asks the user for the range of near by cities for the next function
@@ -75,7 +76,11 @@ async function nearCities(input, id){
         method: 'GET',
         url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/${id}/nearbyCities`,
         params: {
-            radius: input 
+            radius: input,
+            
+            // added units of KM and Canadas ID for params as feedback said 2024-03-29
+            distanceUnit: 'KM',
+            countryIds: 'CA'
         },
         headers: {
             'X-RapidAPI-Key': key,
