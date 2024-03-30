@@ -59,36 +59,62 @@ class DoublyLinkedList:
                 self.size += 1
             
     def remove_student(self, student_id):
-        current = self.head
         
-        if(self.head == None and current.student.student_id != student_id):
+        
+        if(self.head == None or student_id == None or self.size < 1):
             return False
         
-        while (current != None and current.student.student_id != student_id):
-            current = current.next
-            if(current == None):
-                return True
+        # Set surrent to the head of the list so we can iterate through
+        current = self.head
+
+        while (current != None):
             
-            #if only one item in class list
-            if (current.prev == None):
+            # When we find the students_id
+            if(current.student.student_id == student_id):
+                
+                # If the student is the only one in the list
                 if(self.head == self.tail):
+                    
+                    # Set the head and tail to nothing so we have an empty list
                     self.head = None
                     self.tail = None
-                else:
-                    self.head = current.next
-                    self.tail = None
                     
-            #last in list
-            elif (current.next == None):
-                self.tail = current.prev
-                self.tail.next = None
+                # If the student is at the front of the list
+                elif(current == self.head):
+                    
+                    # Move the student second in the list to first
+                    #So self head is equal to student 2
+                    # Tail of the student removed now equals none
+                    self.head = current.next
+                    self.head.prev = None
                 
-            #in middle
-            else:
-                current.prev.next = current.next
-                current.next.prev = current.prev
-            self.size -= 1
-            return True
+                # If the student is at the end of the list
+                elif(current == self.tail):
+                    
+                    # Move the student second to last in the list to last
+                    # So self tail is equal to student second to last
+                    # Tail of the student removed now equals none
+                    self.tail = current.prev
+                    self.tail.next = None
+                
+                # If the student is in the middle of the list
+                else:
+                    # Sets the students next node before the one removed to the student after the student removed
+                    # Sets the students prev node after the one removed to the student before the student removed
+                    current.prev.next = current.next
+                    current.next.prev = current.prev
+                
+                # decrease the size when student is removed
+                self.size -= 1
+                
+                # Return true fue to student being removed
+                return True
+            
+            # If student wasnt found go to next student
+            current = current.next
+            
+        # nothing was removed so return false 
+        return False
     
     def changeFormat(student):
         result = "Student Name: " + student.name + " Student ID: " + str(student.student_id)
@@ -102,8 +128,6 @@ class DoublyLinkedList:
             current = current.next
         
     def print_descend(self):
-        actSize = DoublyLinkedList.num_students(self)
-        classList = [actSize]
         current = self.tail
         print("Class List (decending): ")
         while(current != None):
@@ -114,7 +138,7 @@ def main():
     className = input("Enter class name and max number of students separated by the ENTER key:\n")
     maxNumOfStudents = int(input())
     class_list = DoublyLinkedList()
-    out = "Please make a selection for the course ${className}\n\t1: Add Student\n\t2: Remove Student\n\t3: Print Number of Students\n\t4: Class List in Ascending Order\n\t5: Class List in Descending Order\n\t0: Exit Program"
+    out = f'Please make a selection for the course {className}\n\t1: Add Student\n\t2: Remove Student\n\t3: Print Number of Students\n\t4: Class List in Ascending Order\n\t5: Class List in Descending Order\n\t0: Exit Program'
     print(out)
     
     while(True):
