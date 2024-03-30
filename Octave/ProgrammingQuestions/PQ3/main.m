@@ -5,6 +5,7 @@ function retval = createFrequencyTable(fileName)
 	% File name
 	data = fileread(fileName);
 	
+	
 	% Removing White Space
 	tokens = strsplit(data);
 	
@@ -51,7 +52,8 @@ function retval = naiveBayes(dictionary, tokens)
 
 	retval = 0;
 	tokenLength = length(fieldnames(dictionary));
-	
+	total = getTotalCount(dictionary);
+
 	% checks if there is a row by the name of the token to check
 	for i = 1:length(tokens)
 
@@ -60,9 +62,21 @@ function retval = naiveBayes(dictionary, tokens)
 
 		%checks if the word even exists in the dictionary
 		if isfield(dictionary, curr)
-		  retval += (dictionary.(curr)/ tokenLength);
+
+			%updated te formula for naiveBayesas per feedback
+		  retval += (dictionary.(curr)/ total);
 		end;
-		
+	end;
+end;
+
+%function to get the total count of the words in the current book
+function retval = getTotalCount(dictionary)
+	retval = 0;
+	word = fieldnames(dictionary);
+
+	%words
+	for i = 1:length(word)
+		retval = retval + dictionary.(word{i});
 	end;
 end;
 
