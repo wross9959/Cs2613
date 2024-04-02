@@ -134,7 +134,7 @@
       (if (= k 50)
           (SUM currValues)
           (loop (add1 k)
-                (cons (/ (* (expt -1 k) (expt z (+ 1 (* 2 k)))) (fact (* 2 k)))currValues)))))
+                (cons (/ (* (expt -1 k) (expt z (* 2 k))) (fact (* 2 k)))currValues)))))
   (map fcsVal values))
 
 
