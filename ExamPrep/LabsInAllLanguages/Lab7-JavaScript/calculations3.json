@@ -1,0 +1,22 @@
+{
+  "data": {
+    "calculations": [
+      {
+        "calc": "70.5",
+        "performer": "TRUE"
+      },
+      {
+        "calc": "70.5",
+        "performer": "Abby"
+      },
+      {
+        "calc": "120",
+        "performer": "Tyson"
+      },
+      {
+        "calc": "140",
+        "performer": "Zack"
+      }
+    ]
+  }
+}
