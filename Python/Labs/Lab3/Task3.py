@@ -2,6 +2,7 @@ num1 = [8,10,7.5]
 num2 = ["Hello!", "CompSci2613", "Lab-12"]
 num3 = [-15, -4, 0, 4, 23, 64, 101, 104, 123]
 num4 = ["alice", "bob", "Carl", "daisy", "Earl"]
+
 #1
 print(list(map(lambda x: x*2, num1)))
 
