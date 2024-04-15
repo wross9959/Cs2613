@@ -1,101 +1,3 @@
-; #lang Racket
-; (require racket/class)
-
-
-; (define node%
-;     (class object%
-;         (super-new)
-
-;         ;accessor methods
-;         (define/public (get-student) student)
-;         (define/public (get-next) next) 
-;         (define/public (get-prev) prev) 
-
-;         ;mutator methods
-;         (define/public (set-prev new-prev) (set! prev new-prev))
-;         (define/public (set-next new-next) (set! next new-next))
-;     )
-;     ; constructor
-;     (init-field student prev next)
-; )
-
-; (define student
-;     (class object%
-;         (super-new)
-;         (define/public (get-name) name)
-;         (define/public (get-id) id)
-;     )
-;     (init-field name id)
-; )
-
-; (define doublyLL%
-;     (class object%
-
-;         ;returns the current number of students registered in the course.
-;         (define/public (num-students)
-;             (let loop ((node (send head get-next)) (num 0))
-;                 (if (equals? node tail)
-;                     (count)
-;                     (loop (send node get-next) (add1 count))
-;                 )
-;             )
-;         )
-;         ;takes a Student object and adds it to the course in order of student ID
-;         (define/public (add-student toAdd)
-;             (let loop ((node head))
-;                 (cond
-;                     [(equals? node tail)
-;                         (let ([new-node (new node% [student toadd] [prev (node-get-prev)])])
-;                             (send (node-get-prev node) set-next new-node)
-;                             (send node set-prev new-node))]
-
-;                     [(< (send student get-id) (send (send node get-student) get-id))
-;                     (let ([new-node (new node% [student toAdd] [prev (send node get-prev)] [next node])])
-;                         (send (send node get-prev) set-next new-node)
-;                         (send node set-prev new-node))]
-;                     [else
-;                         (loop (send node get-next))])))
-                    
-;         ;  takes an integer (student ID) and removes the first occurrence of that student id from the course while maintaining order
-;         (define/public (remove-student)
-;             (let loop ((node (send head get-next)))
-;                 (cond
-;                     [(eq? node tail) #f]
-;                     [(= (send (send node get-student) get-id) student-id)
-;                         (send (send node get-prev) set-next (send node get-next))
-;                         (send (send node get-next) set-prev (send node get-prev))
-;                     #t]
-;                     [else (loop (send node get-next))])))
-        
-;         ;return a string containing all students in the class (name + id) in ascending order of id. String should be readable if printed out immediately after return
-;         (define/public (print_ascend)
-;             (let loop ((node (send head get-next)) (toPrint ""))
-;                 (if (equals? node tail)
-;                     (toPrint)
-;                     (loop (send node get-next)
-;                         (string-append toPrint
-;                             (send (send node get-student) get-name) "-"
-;                                 (number->string (send (send node get-student) "\n")))))))
-                            
-
-    
-;         ; return a string containing all students in the class (name + id) in descending order of id. String should be readable if printed out immediately after return
-;         (define/public (print_descend)
-;         (let loop ((node (send head get-prev)) (toPrint ""))
-;                 (if (equals? node head)
-;                     (toPrint)
-;                     (loop (send node get-prev)
-;                         (string-append toPrint
-;                             (send (send node get-student) get-name) "-"
-;                                 (number->string (send (send node get-student) "\n")))))))
-;     )
-;     (init-field head tail)
-
-
-; )
-
-
-
 #lang racket
 (require racket/class)
 
@@ -121,99 +23,177 @@
         (define/public (set-next new-next) (set! next new-next))
     
     ; constructor
-    (init-field student prev next)))
-
-
-
+    (init-field [student null] [prev null] [next null])))
 
 (define doublyLL%
     (class object%
       (super-new)
 
-        ;returns the current number of students registered in the course.
-        (define/public (num-students)
-            (let loop ((node (send head get-next)) (num 0))
-                (if (eq? node tail)
-                    (count)
-                    (loop (send node get-next) (add1 count))
-                )
-            )
-        )
-        ;takes a Student object and adds it to the course in order of student ID
-        (define/public (add-student toAdd)
-            (let loop ((node head))
-                (cond
-                    [(eq? node tail)
-                        (let ([new-node (new node% [student toAdd] [prev (send node get-prev node)] [next node])])
-                            (send (send node get-prev) set-next new-node)
-                            (send node set-prev new-node))]
+      ;Accessors
+      (define/public (num-students) count)
+      (define/public (get-head) head)
+      (define/public (get-tail) tail)
 
-                    [(< (send toAdd get-id) (send (send node get-student) get-id))
-                    (let ([new-node (new node% [student toAdd] [prev (send node get-prev)] [next node])])
-                        (send (send node get-prev) set-next new-node)
-                        (send node set-prev new-node))]
-                    [else
-                        (loop (send node get-next))])))
-                    
-        ;  takes an integer (student ID) and removes the first occurrence of that student id from the course while maintaining order
-        (define/public (remove-student student-id)
-            (let loop ((node (send head get-next)))
-                (cond
-                    [(eq? node tail) #f]
-                    [(= (send (send node get-student) get-id) student-id)
-                        (send (send node get-prev) set-next (send node get-next))
-                        (send (send node get-next) set-prev (send node get-prev))
-                    #t]
-                    [else (loop (send node get-next))])))
+      ;Mutators
+      (define/public (set-head new-head) (set! head new-head))
+      (define/public (set-tail new-tail) (set! tail new-tail))
+
+
+      ;Other needed methods
+      (define/public (add-student student)
+        ;create a 
+        (define node (new node% [student student]))
+        (define currentNode (send this get-head))
+        (cond
+          [(equal? (send this num-students) 0)
+           (send this set-head node)
+           (send this set-tail node)
+           (set! count (add1 count))]
+          [else
+           (send this add-student-helper currentNode node)]))
+
+
+
+      (define/public (add-student-helper currentNode toAdd)
         
-        ;return a string containing all students in the class (name + id) in ascending order of id. String should be readable if printed out immediately after return
-        (define/public (print_ascend)
-            (let loop ((node (send head get-next)) (toPrint ""))
-                (if (eq? node tail)
-                    (toPrint)
-                    (loop (send node get-next)
-                        (string-append toPrint
-                            (send student% get-name) " - "
-                                (number->string (send student% get-id)) "\n")))))
-                            
+        (cond
+          ; loop to find proper spot
+          [(and (not (null? currentNode)) ( < (send (send currentNode get-student) get-id) (send (send toAdd get-student) get-id)))
+           (add-student-helper (send currentNode get-next) toAdd)
+           ]
+          
+          [else
+            (cond
+              
+              ; if we are at the end of the list add at the tail
+              [(null? currentNode)
+               (send (send this get-tail) set-next toAdd)
+               (send toAdd set-prev (send this get-tail))
+               (send this set-tail toAdd)
+               (set! count (add1 count))
+               ]
 
-    
-        ; return a string containing all students in the class (name + id) in descending order of id. String should be readable if printed out immediately after return
-        (define/public (print_descend)
-        (let loop ((node (send head get-prev)) (toPrint ""))
-                (if (eq? node head)
-                    (toPrint)
-                    (loop (send node get-prev)
-                        (string-append toPrint
-                            (send (send node get-student) get-name) "-"
-                               (number->string (send student% get-id)) "\n")))))
-    
-    (init-field head tail)))
+              ; if we are at the start of the list add at the head
+              [(null? (send currentNode get-prev))
+               (send toAdd set-next (send this get-head))
+               (send (send this get-head) set-prev toAdd)
+               (send this set-head toAdd)
+               (set! count (add1 count))
+               ]
+                
+              ; Adding in between two nodes in the list
+              [else
+               (send toAdd set-next currentNode)
+               (send toAdd set-prev (send currentNode get-prev))
+               (send (send currentNode get-prev) set-next toAdd)
+               (send currentNode set-prev toAdd)
+               (set! count (add1 count))
+               ]
+              )
+            ]
+          )
+        )
+      
+      ; Remove method
+      (define/public (remove-student student-id)
+        (cond
+          ; checks that there is at least one student
+          [(equal? (send this num-students) 0) #f]
+          
+          [else
+           (define currentNode (send this get-head))
+           (send this remove-student-helper currentNode student-id)]))
+
+      (define/public (remove-student-helper currentNode student-id)
+        (cond
+          [(not (null? currentNode))
+           (cond
+             [(equal? (send (send currentNode get-student) get-id) student-id)
+              (cond
+                ; if there is only one student
+                [(equal? (send this get-head) (send this get-tail))
+                 (send this set-head null)
+                 (send this set-tail null)
+                 ]
+
+                ; if the student at the front of the list
+                [(equal? currentNode (send this get-head))
+                 (send this set-head (send currentNode get-next))
+                 (send (send this get-head) set-prev null)
+                 ]
+
+                ; if the student is at the end of the list
+                [(equal? currentNode (send this get-tail))
+                  (send this set-tail (send currentNode get-prev))
+                  (send (send this get-tail) set-next null)
+                 ]
+
+                ; if the student is in the middle of the list
+                [else
+                 (
+                  (send (send (send currentNode get-prev) get-next) set-next (send currentNode get-next))
+                  (send (send (send currentNode get-next) get-prev) set-prev (send currentNode get-prev))
+                  )
+                ]     
+                )
+              (set! count (sub1 count)) #t]
+             [else (remove-student-helper (send currentNode get-next) student-id)]
+             )
+           ]
+          )
+        )           
+      (define/public (print-ascend)
+        (define (print-students-helper current)
+          (cond
+            [(not (null? current))
+             (displayln (send (send current get-student) get-name))
+             (print-students-helper (send current get-next))]))
+        (print-students-helper (send this get-head)))
+
+      (define/public (print-descend)
+        (define (print-students-helper current)
+          (cond
+            [(not (null? current))
+             (displayln (send (send current get-student) get-name))
+             (print-students-helper (send current get-prev))]))
+        (print-students-helper (send this get-tail)))
+      
+    (init-field [head null] [tail null] [count 0])))
 
 
-(define (test-doubly-linked-list)
-  (define head (new node% [student #f] [prev #f] [next #f]))
-  (define tail (new node% [student #f] [prev head] [next #f]))
-  (send head set-next tail)
-  
-  (define dll (new doublyLL% [head head] [tail tail]))
+(define my-list (new doublyLL%))
 
-  (define alice (new student% [name "Alice"] [id 123]))
-  (define bob (new student% [name "Bob"] [id 456]))
-  (define charlie (new student% [name "Charlie"] [id 789]))
+(send my-list add-student (new student% [name "Alice"] [id 1]))
+(send my-list add-student (new student% [name "Bob"] [id 3]))
+(send my-list add-student (new student% [name "Charlie"] [id 2]))
 
-  (send dll add-student alice)
-  (send dll add-student bob)
-  (send dll add-student charlie)
+(send my-list print-ascend)
+(displayln "")
+(send my-list print-descend)
+(displayln "\nCount")
+(send my-list num-students)
 
-  (printf "Number of students: ~a\n" (send dll num-students))
-  (printf "Class list in ascending order by ID:\n~a" (send dll print-ascend))
-  (printf "Class list in descending order by ID:\n~a" (send dll print-descend))
-  
-  (send dll remove-student (send bob get-id))
-  (printf "After removing student with ID 456:\n")
-  (printf "Number of students: ~a\n" (send dll num-students))
-  (printf "Class list in ascending order by ID:\n~a" (send dll print-ascend))
-  (printf "Class list in descending order by ID:\n~a" (send dll print-descend)))
+(displayln "\nAfter removing Bob:")
+(send my-list remove-student 3)
+(send my-list print-ascend)
+(displayln "")
+(send my-list print-descend)
+(displayln "\nCount")
+(send my-list num-students)
 
-(test-doubly-linked-list)
+(displayln "\nAfter removing Alice:")
+(send my-list remove-student 1)
+(send my-list print-ascend)
+(displayln "")
+(send my-list print-descend)
+(displayln "\nCount")
+(send my-list num-students)
+
+(displayln "\nAfter removing Charlie:")
+(send my-list remove-student 2)
+(send my-list print-ascend)
+(displayln "")
+(send my-list print-descend)
+(displayln "\nCount")
+(send my-list num-students)
+
