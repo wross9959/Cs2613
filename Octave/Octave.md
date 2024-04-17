@@ -1,30 +1,5 @@
 # Octave Cheat Sheet
 
-This repository contains a comprehensive cheat sheet for Octave, covering various topics such as basic operations, data structures, file I/O, plotting, linear algebra, statistics, signal processing, control flow, functions, and more.
-
-## Overview
-
-Octave is a high-level programming language primarily used for numerical computations and data analysis. It is compatible with MATLAB syntax and is often used as an open-source alternative to MATLAB. This cheat sheet aims to provide a quick reference for Octave functions and programming constructs, along with practical examples to illustrate their usage.
-
-## Contents
-
-- [Installation](#installation)
-- [Basic Operations](#basic-operations)
-- [Data Structures](#data-structures)
-  - [Arrays](#arrays)
-  - [Cell Arrays](#cell-arrays)
-- [File I/O](#file-io)
-- [Plotting](#plotting)
-- [Linear Algebra](#linear-algebra)
-- [Statistics](#statistics)
-- [Signal Processing](#signal-processing)
-- [Control Flow](#control-flow)
-- [Functions and Script Files](#functions-and-script-files)
-- [Other Useful Functions](#other-useful-functions)
-
-## Installation
-
-To use Octave, you can download and install it from the [official Octave website](https://docs.octave.org/latest/). Alternatively, you can use package managers like `apt` on Linux or `brew` on macOS.
 
 ## Basic Operations
 

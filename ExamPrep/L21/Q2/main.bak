@@ -1,0 +1,18 @@
+#lang racket
+
+
+(define (piecewise)
+  (define (even n)
+    (equal (modulo n 2) 0))
+
+  (define (piecewise-helper x)
+    (if (> x 20)'() 
+        (cons
+         (cond [(even x) (factorial x)]  
+               [(not (even x)) (x * 2)] 
+         (piecewise-helper (+ x 1)))))
+
+  (piecewise-helper 10)))
+
+
+(piecewise)

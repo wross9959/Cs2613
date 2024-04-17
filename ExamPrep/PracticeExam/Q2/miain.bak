@@ -1,0 +1,12 @@
+(define (factorial x)
+  (if (= x 0) 1 (* x (factorial (- x 1)))))
+
+(define (piecewise)
+  (define (helper x)
+    (cond [(< x 7) (factorial x)]
+          [(and (>= x 7) (< x 12)) (+ (* x 5) 2)]
+          [(and (>= x 12) (< x 20)) (- x)]
+          [else (* x 100)]))
+  (map helper (range 3 26)))
+
+(piecewise) 
