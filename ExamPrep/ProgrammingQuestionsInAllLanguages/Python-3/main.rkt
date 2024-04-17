@@ -163,37 +163,35 @@
 
 (define my-list (new doublyLL%))
 
-(send my-list add-student (new student% [name "Alice"] [id 1]))
-(send my-list add-student (new student% [name "Bob"] [id 3]))
-(send my-list add-student (new student% [name "Charlie"] [id 2]))
+(send my-list add-student (new student% [name "Student A"] [id 1]))
+(send my-list add-student (new student% [name "Student C"] [id 3]))
+(send my-list add-student (new student% [name "Student B"] [id 2]))
 
 (send my-list print-ascend)
-(displayln "")
 (send my-list print-descend)
-(displayln "\nCount")
 (send my-list num-students)
 
-(displayln "\nAfter removing Bob:")
+; Remove Student C
 (send my-list remove-student 3)
 (send my-list print-ascend)
-(displayln "")
 (send my-list print-descend)
-(displayln "\nCount")
 (send my-list num-students)
 
-(displayln "\nAfter removing Alice:")
+; Remove Student A
 (send my-list remove-student 1)
 (send my-list print-ascend)
-(displayln "")
 (send my-list print-descend)
-(displayln "\nCount")
 (send my-list num-students)
 
-(displayln "\nAfter removing Charlie:")
+; Add student D
+(send my-list add-student (new student% [name "Student D"] [id 4]))
+(send my-list print-ascend)
+(send my-list print-descend)
+(send my-list num-students)
+
+; Remove Student B
 (send my-list remove-student 2)
 (send my-list print-ascend)
-(displayln "")
 (send my-list print-descend)
-(displayln "\nCount")
 (send my-list num-students)
 
