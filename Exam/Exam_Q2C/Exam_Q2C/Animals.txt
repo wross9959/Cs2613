@@ -1,0 +1,5 @@
+"Aardvark" 0
+"Bear" 1
+"Chicken" 1
+"Dolphin" 1
+"Elephant" 0

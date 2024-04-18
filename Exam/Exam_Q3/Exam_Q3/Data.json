@@ -1,0 +1,102 @@
+{
+  "data": [
+    {
+      "id": 3518680,
+      "wikiDataId": "Q1383701",
+      "type": "CITY",
+      "city": "New Maryland",
+      "name": "New Maryland",
+      "country": "Canada",
+      "countryCode": "CA",
+      "region": "New Brunswick",
+      "regionCode": "NB",
+      "regionWdId": "Q1965",
+      "latitude": 45.891111111,
+      "longitude": -66.684722222,
+      "population": 4174,
+      "distance": 4.16
+    },
+    {
+      "id": 1240786,
+      "wikiDataId": "Q3365841",
+      "type": "CITY",
+      "city": "Lincoln",
+      "name": "Lincoln",
+      "country": "Canada",
+      "countryCode": "CA",
+      "region": "New Brunswick",
+      "regionCode": "NB",
+      "regionWdId": "Q1965",
+      "latitude": 45.9053,
+      "longitude": -66.5794,
+      "population": 2504,
+      "distance": 5.21
+    },
+    {
+      "id": 10696,
+      "wikiDataId": "Q1966925",
+      "type": "CITY",
+      "city": "Oromocto",
+      "name": "Oromocto",
+      "country": "Canada",
+      "countryCode": "CA",
+      "region": "New Brunswick",
+      "regionCode": "NB",
+      "regionWdId": "Q1965",
+      "latitude": 45.8488,
+      "longitude": -66.4788,
+      "population": 8805,
+      "distance": 11.42
+    },
+    {
+      "id": 10932,
+      "wikiDataId": "Q928252",
+      "type": "CITY",
+      "city": "Hampton",
+      "name": "Hampton",
+      "country": "Canada",
+      "countryCode": "CA",
+      "region": "New Brunswick",
+      "regionCode": "NB",
+      "regionWdId": "Q1965",
+      "latitude": 45.533,
+      "longitude": -65.833,
+      "population": 3436,
+      "distance": 49.46
+    },
+    {
+      "id": 10237,
+      "wikiDataId": "Q203403",
+      "type": "CITY",
+      "city": "Saint John",
+      "name": "Saint John",
+      "country": "Canada",
+      "countryCode": "CA",
+      "region": "New Brunswick",
+      "regionCode": "NB",
+      "regionWdId": "Q1965",
+      "latitude": 45.2796,
+      "longitude": -66.0628,
+      "population": 67575,
+      "distance": 54.75
+    }
+  ],
+  "links": [
+    {
+      "rel": "first",
+      "href": "/v1/geo/cities/Q2138/nearbyCities?offset=0&limit=5&radius=100&minPopulation=2000"
+    },
+    {
+      "rel": "next",
+      "href": "/v1/geo/cities/Q2138/nearbyCities?offset=5&limit=5&radius=100&minPopulation=2000"
+    },
+    {
+      "rel": "last",
+      "href": "/v1/geo/cities/Q2138/nearbyCities?offset=10&limit=5&radius=100&minPopulation=2000"
+    }
+  ],
+  "metadata": {
+    "currentOffset": 0,
+    "totalCount": 12
+  }
+}
